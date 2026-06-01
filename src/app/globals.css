@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  --color-matte-black: #050505;
+  --color-deep-charcoal: #121214;
+  --color-elite-gold: #C5A880;
+  --color-elite-gold-light: #E2D4C0;
+  --color-off-white: #FAFAFA;
+  --color-muted-grey: #8E8E93;
+  
+  --font-serif: var(--font-cormorant-garamond), serif;
+  --font-sans: var(--font-plus-jakarta-sans), sans-serif;
+  
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+:root {
+  --background: #050505;
+  --foreground: #FAFAFA;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-plus-jakarta-sans), sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom premium scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: #1C1C1E;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A880;
+}
+
+/* Premium custom UI styles */
+.glassmorphic {
+  background: rgba(18, 18, 20, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glassmorphic-gold {
+  background: rgba(18, 18, 20, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(197, 168, 128, 0.15);
+}
+
+.gold-glow {
+  box-shadow: 0 0 50px rgba(197, 168, 128, 0.05);
+}
+
+.gold-border-glow:hover {
+  box-shadow: 0 0 20px rgba(197, 168, 128, 0.2);
+  border-color: rgba(197, 168, 128, 0.5);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #F3ECE0 0%, #C5A880 50%, #A88657 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Scroll Fade Animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUpActive 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInUpActive {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
