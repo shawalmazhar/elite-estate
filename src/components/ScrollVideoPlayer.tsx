@@ -23,10 +23,36 @@ export default function ScrollVideoPlayer() {
   const targetTime1 = useRef(0);
   const targetTime2 = useRef(0);
 
+  // Preloader States
+  const [siteLoading, setSiteLoading] = useState(true);
+  const [loadPercent, setLoadPercent] = useState(0);
+
   // Standard Lerp Helper
   const lerp = (start: number, end: number, amt: number) => {
     return (1 - amt) * start + amt * end;
   };
+
+  // Preloader Vetting Sync Effect
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLoadPercent((prev) => {
+        if (prev >= 90) {
+          if (video1Loaded) {
+            if (prev >= 100) {
+              clearInterval(timer);
+              setTimeout(() => setSiteLoading(false), 500); // Smooth exit delay
+              return 100;
+            }
+            return prev + 2;
+          }
+          return 90; // Pause at 90% to wait for Video 1 buffer readiness
+        }
+        return prev + Math.floor(Math.random() * 6) + 2;
+      });
+    }, 60);
+
+    return () => clearInterval(timer);
+  }, [video1Loaded]);
 
   useEffect(() => {
     const video1 = video1Ref.current;
@@ -176,6 +202,48 @@ export default function ScrollVideoPlayer() {
 
   return (
     <div ref={containerRef} className="relative h-[650vh] w-full bg-matte-black">
+      {/* Vetted Luxury Preloader Overlay */}
+      <AnimatePresence>
+        {siteLoading && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -40 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[999] bg-matte-black flex flex-col justify-center items-center select-none"
+          >
+            {/* Subtle architectural bg grid */}
+            <div className="absolute inset-0 bg-[radial-gradient(#C5A880_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03]" />
+
+            <div className="text-center space-y-6 relative z-10">
+              {/* Logo text */}
+              <div className="space-y-1.5">
+                <h2 className="font-serif text-3xl md:text-4xl tracking-[0.25em] text-off-white font-light">
+                  ELITE ESTATE
+                </h2>
+                <span className="block font-sans text-[9px] tracking-[0.5em] uppercase text-elite-gold font-semibold">
+                  LUXURY PORTAL
+                </span>
+              </div>
+
+              {/* Progress track */}
+              <div className="w-48 h-[1px] bg-white/10 mx-auto relative overflow-hidden">
+                <div
+                  className="h-full bg-elite-gold transition-all duration-300 ease-out"
+                  style={{ width: `${loadPercent}%` }}
+                />
+              </div>
+
+              {/* Vetting Status Text */}
+              <span className="block font-sans text-[8px] uppercase tracking-widest text-elite-gold/50 animate-pulse">
+                {loadPercent < 90
+                  ? "Decrypting Secure Access..."
+                  : "Initializing Spatial Video Buffers..."}
+              </span>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Sticky video container */}
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden z-10 flex items-center justify-center">
         {/* Background dark overlay for luxury depth */}
