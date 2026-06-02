@@ -1,5 +1,5 @@
-import React from "react";
-import ScrollVideoPlayer from "@/components/ScrollVideoPlayer";
+import ParallaxHero from "@/components/ParallaxHero";
+import HorizontalShowcase from "@/components/HorizontalShowcase";
 import PropertyCard from "@/components/PropertyCard";
 import { propertiesData } from "@/data/properties";
 import { Compass, ShieldCheck, Star } from "lucide-react";
@@ -8,10 +8,13 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="w-full bg-matte-black text-off-white">
-      {/* 1. IMMERSIVE MULTI-VIDEO SCROLL EXPERIENCE SECTION */}
+      {/* 1. IMMERSIVE MULTI-LAYERED PARALLAX HERO SECTION */}
       <section className="relative z-10 w-full">
-        <ScrollVideoPlayer />
+        <ParallaxHero />
       </section>
+
+      {/* 2. HORIZONTAL FULL-SCREEN PARALLAX SHOWCASE SECTION */}
+      <HorizontalShowcase />
 
       {/* 2. SIGNATURE COLLECTION MASONRY SECTION */}
       <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto relative z-20 bg-matte-black">
